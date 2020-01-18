@@ -29,10 +29,5 @@ services:
     volumes:
       - "concourse-keys:/concourse-keys"
 
-  mqtt-resource:
-    image: vergissberlin/mqtt-resource:development
-    environment:
-      - CODACY_PROJECT_TOKEN
-
 volumes:
   concourse-keys:

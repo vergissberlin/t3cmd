@@ -1,5 +1,14 @@
 # Concourse example
 
+## Presentantion
+
+- Vorstellung
+- Überblick CI
+- Wann setzt ich ich Concourse CI ein
+- Gemeinsam Concourse starten
+- Concourse Erweitern
+
+
 ## Usage
 
 ```shell
@@ -39,3 +48,8 @@ resource_types:
 ```shell
 fly hijack -t local -j mqtt-resource/example
 ```
+
+# Extend Cocnourse CI
+
+- Developing a Custom Concourse Resource https://content.pivotal.io/blog/developing-a-custom-concourse-resource
+
