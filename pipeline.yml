@@ -1,0 +1,107 @@
+---
+
+#####################################################################################
+resources:
+
+# Docker
+- name: git-example
+  type: git
+  source:
+    repository: git@github.com:vergissberlin/t3cmd.git
+
+- name: docker-alpine
+  type: docker-image
+  source:
+    repository: alpine
+- name: docker-mqtt-resource
+  check_every: 10s
+  type: docker-image
+  source:
+    repository: vergissberlin/mqtt-resource
+    tag: development
+# Others
+- name: mqtt-broker
+  type: mqtt-resource
+  check_every: 10s
+  source:
+    url: mqtt://test.mosquitto.org
+    port: 1883
+    topic: test
+
+
+#####################################################################################
+resource_types:
+
+- name: mqtt-resource
+  type: docker-image
+  source:
+    repository: vergissberlin/mqtt-resource
+    tag: development
+
+
+#####################################################################################
+jobs:
+
+- name: example
+  serial: true
+  plan:
+  - in_parallel:
+    - get: docker-alpine
+      trigger: true
+    - get: docker-mqtt-resource
+      trigger: true
+  - task: test
+    privileged: true
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source:
+          repository: alpine
+      inputs:
+      - name: docker-alpine
+      outputs:
+      - name: out
+      run:
+        path: sh
+        args:
+        - -exc
+        - |
+          echo "This is from mqtt-concource ci ressource" > out/message
+  - task: output
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source:
+          repository: alpine
+      inputs:
+      - name: out
+      outputs:
+      - name: out
+      run:
+        path: sh
+        args:
+        - -exc
+        - |
+          cat out/message
+  on_success:
+    put: mqtt-broker
+    params:
+      payload: Release success
+      topic: test
+  on_failure:
+    put: mqtt-broker
+    params:
+      payload: Release failure
+      topic: test
+  on_error:
+    put: mqtt-broker
+    params:
+      payload: Release error
+      topic: test
+  on_abort:
+    put: mqtt-broker
+    params:
+      payload: Release aborted
+      topic: test
