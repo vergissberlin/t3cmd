@@ -36,7 +36,7 @@ fly -t local destroy-pipeline -p example
 fly hijack -t local -j example/test
 ```
 
-# Extend Cocnourse CI
+# Extend Concourse CI
 
 - Developing a Custom Concourse Resource https://content.pivotal.io/blog/developing-a-custom-concourse-resource
 
