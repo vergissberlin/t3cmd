@@ -33,7 +33,7 @@ fly -t local destroy-pipeline -p example
 ### Pipeline
 
 ```shell
-fly hijack -t local -j main/example
+fly hijack -t local -j example/test
 ```
 
 # Extend Cocnourse CI
