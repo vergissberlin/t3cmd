@@ -1,12 +1,14 @@
 # Concourse example
 
+> This is an example project for presentation at the T3CMD in 2020.
+
 ## Presentantion
 
-- Vorstellung
-- Überblick CI
-- Wann setzt ich ich Concourse CI ein
-- Gemeinsam Concourse starten
-- Concourse Erweitern
+- Introduction
+- Overview CI
+- When do I use Concourse CI
+- Start Concourse together
+- Expand Concourse
 
 
 ## Usage
